@@ -177,8 +177,13 @@ def web_search(query: str) -> str:
 # Run MCP server
 # -----------------------------
 if __name__ == "__main__":
-    free_port = get_free_port(8000, 9000)
-    os.environ["FASTMCP_HOST"] = "127.0.0.1"
-    os.environ["FASTMCP_PORT"] = str(free_port)
-    print(f"✅ UnifiedLawMCP starting on http://127.0.0.1:{free_port}")
+    # Use Render-assigned port or default to 10000
+    port = int(os.environ.get("PORT", 10000))
+
+    os.environ["FASTMCP_HOST"] = "0.0.0.0"
+    os.environ["FASTMCP_PORT"] = str(port)
+
+    print(f"✅ GuideSupportMCP starting on port {port}...")
     mcp.run("streamable-http")
+
+
